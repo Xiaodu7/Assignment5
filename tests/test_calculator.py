@@ -178,3 +178,147 @@ def test_calculator_repl_help(mock_print, mock_input):
 def test_calculator_repl_addition(mock_print, mock_input):
     calculator_repl()
     mock_print.assert_any_call("\nResult: 5")
+
+def test_history_size_limit(calculator):
+    """Test that history does not exceed the configured maximum size."""
+    calculator.config.max_history_size = 1
+
+    operation = OperationFactory.create_operation('add')
+    calculator.set_operation(operation)
+
+    calculator.perform_operation(1, 2)
+    calculator.perform_operation(3, 4)
+
+    assert len(calculator.history) == 1
+    assert calculator.history[0].result == Decimal("7")
+
+
+def test_save_empty_history(calculator):
+    """Test saving history when there are no calculations."""
+    with patch('app.calculator.pd.DataFrame.to_csv') as mock_to_csv:
+        calculator.save_history()
+
+        mock_to_csv.assert_called_once()
+
+
+def test_load_empty_history(calculator):
+    """Test loading an existing but empty history file."""
+    with patch('app.calculator.Path.exists', return_value=True), \
+         patch('app.calculator.pd.read_csv', return_value=pd.DataFrame()):
+
+        calculator.load_history()
+
+        assert calculator.history == []
+
+
+def test_get_history_dataframe(calculator):
+    """Test converting calculation history to a pandas DataFrame."""
+    operation = OperationFactory.create_operation('add')
+    calculator.set_operation(operation)
+    calculator.perform_operation(2, 3)
+
+    df = calculator.get_history_dataframe()
+
+    assert isinstance(df, pd.DataFrame)
+    assert len(df) == 1
+    assert df.iloc[0]['operation'] == 'Addition'
+    assert df.iloc[0]['operand1'] == '2'
+    assert df.iloc[0]['operand2'] == '3'
+    assert df.iloc[0]['result'] == '5'
+
+
+def test_show_history(calculator):
+    """Test formatted calculation history."""
+    operation = OperationFactory.create_operation('add')
+    calculator.set_operation(operation)
+    calculator.perform_operation(2, 3)
+
+    history = calculator.show_history()
+
+    assert history == ["Addition(2, 3) = 5"]
+
+
+def test_undo_when_empty(calculator):
+    """Test undo when there is nothing to undo."""
+    assert calculator.undo() is False
+
+
+def test_redo_when_empty(calculator):
+    """Test redo when there is nothing to redo."""
+    assert calculator.redo() is False
+
+def test_initialization_handles_load_history_error(tmp_path):
+    """Test calculator initialization when loading history fails."""
+    config = CalculatorConfig(base_dir=tmp_path)
+
+    with patch.object(
+        Calculator,
+        'load_history',
+        side_effect=Exception("load failed")
+    ), patch('app.calculator.logging.warning') as mock_warning:
+
+        calc = Calculator(config=config)
+
+        assert calc.history == []
+        mock_warning.assert_called_once_with(
+            "Could not load existing history: load failed"
+        )
+
+
+def test_setup_logging_error(calculator):
+    """Test error handling when logging setup fails."""
+    with patch(
+        'app.calculator.logging.basicConfig',
+        side_effect=OSError("log failed")
+    ), patch('builtins.print') as mock_print:
+
+        with pytest.raises(OSError, match="log failed"):
+            calculator._setup_logging()
+
+        mock_print.assert_called_once_with(
+            "Error setting up logging: log failed"
+        )
+
+
+def test_perform_operation_unexpected_error(calculator):
+    """Test unexpected errors during an operation."""
+    operation = Mock()
+    operation.execute.side_effect = RuntimeError("boom")
+
+    calculator.set_operation(operation)
+
+    with pytest.raises(
+        OperationError,
+        match="Operation failed: boom"
+    ):
+        calculator.perform_operation(2, 3)
+
+
+def test_save_history_error(calculator):
+    """Test error handling when history cannot be saved."""
+    with patch(
+        'app.calculator.pd.DataFrame.to_csv',
+        side_effect=OSError("save failed")
+    ):
+
+        with pytest.raises(
+            OperationError,
+            match="Failed to save history: save failed"
+        ):
+            calculator.save_history()
+
+
+def test_load_history_error(calculator):
+    """Test error handling when history cannot be loaded."""
+    calculator.config.history_file.touch()
+
+    with patch(
+        'app.calculator.pd.read_csv',
+        side_effect=OSError("load failed")
+    ):
+
+        with pytest.raises(
+            OperationError,
+            match="Failed to load history: load failed"
+        ):
+            calculator.load_history()

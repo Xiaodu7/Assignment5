@@ -1,0 +1,42 @@
+2026-10-05 16:55:19,377 - INFO - Logging initialized at: /home/Xiao/Assignment5/logs/calculator.log
+2026-10-05 16:55:19,377 - INFO - No history file found - starting with empty history
+2026-10-05 16:55:19,377 - INFO - Calculator initialized with configuration
+2026-10-05 16:55:19,377 - INFO - Added observer: LoggingObserver
+2026-10-05 16:55:19,377 - INFO - Added observer: AutoSaveObserver
+2026-10-05 16:55:19,379 - INFO - Logging initialized at: /home/Xiao/Assignment5/logs/calculator.log
+2026-10-05 16:55:19,379 - INFO - No history file found - starting with empty history
+2026-10-05 16:55:19,379 - INFO - Calculator initialized with configuration
+2026-10-05 16:55:19,379 - INFO - Added observer: LoggingObserver
+2026-10-05 16:55:19,380 - INFO - Added observer: AutoSaveObserver
+2026-10-05 16:55:19,384 - INFO - Empty history saved
+2026-10-05 16:55:19,386 - INFO - Logging initialized at: /home/Xiao/Assignment5/logs/calculator.log
+2026-10-05 16:55:19,389 - INFO - Loaded empty history file
+2026-10-05 16:55:19,389 - INFO - Calculator initialized with configuration
+2026-10-05 16:55:19,389 - INFO - Added observer: LoggingObserver
+2026-10-05 16:55:19,389 - INFO - Added observer: AutoSaveObserver
+2026-10-05 16:55:19,389 - INFO - Set operation: Addition
+2026-10-05 16:55:19,389 - INFO - Calculation performed: Addition (2, 3) = 5
+2026-10-05 16:55:19,391 - INFO - History saved successfully to /home/Xiao/Assignment5/history/calculator_history.csv
+2026-10-05 16:55:19,391 - INFO - History auto-saved
+2026-10-05 16:55:19,393 - INFO - History saved successfully to /home/Xiao/Assignment5/history/calculator_history.csv
+2026-10-05 16:59:23,029 - INFO - Logging initialized at: /home/Xiao/Assignment5/logs/calculator.log
+2026-10-05 16:59:23,031 - INFO - Loaded 1 calculations from history
+2026-10-05 16:59:23,031 - INFO - Calculator initialized with configuration
+2026-10-05 16:59:23,031 - INFO - Added observer: LoggingObserver
+2026-10-05 16:59:23,031 - INFO - Added observer: AutoSaveObserver
+2026-10-05 16:59:23,034 - INFO - Logging initialized at: /home/Xiao/Assignment5/logs/calculator.log
+2026-10-05 16:59:23,036 - INFO - Loaded 1 calculations from history
+2026-10-05 16:59:23,036 - INFO - Calculator initialized with configuration
+2026-10-05 16:59:23,036 - INFO - Added observer: LoggingObserver
+2026-10-05 16:59:23,036 - INFO - Added observer: AutoSaveObserver
+2026-10-05 16:59:23,039 - INFO - History saved successfully to /home/Xiao/Assignment5/history/calculator_history.csv
+2026-10-05 16:59:23,041 - INFO - Logging initialized at: /home/Xiao/Assignment5/logs/calculator.log
+2026-10-05 16:59:23,043 - INFO - Loaded 1 calculations from history
+2026-10-05 16:59:23,043 - INFO - Calculator initialized with configuration
+2026-10-05 16:59:23,043 - INFO - Added observer: LoggingObserver
+2026-10-05 16:59:23,043 - INFO - Added observer: AutoSaveObserver
+2026-10-05 16:59:23,044 - INFO - Set operation: Addition
+2026-10-05 16:59:23,044 - INFO - Calculation performed: Addition (2, 3) = 5
+2026-10-05 16:59:23,045 - INFO - History saved successfully to /home/Xiao/Assignment5/history/calculator_history.csv
+2026-10-05 16:59:23,045 - INFO - History auto-saved
+2026-10-05 16:59:23,047 - INFO - History saved successfully to /home/Xiao/Assignment5/history/calculator_history.csv
